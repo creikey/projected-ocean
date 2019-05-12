@@ -1,4 +1,3 @@
-tool
 extends MeshInstance
 
 func _process(_delta):

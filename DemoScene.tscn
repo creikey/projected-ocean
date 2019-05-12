@@ -30,7 +30,7 @@ transform = Transform( 0.965926, 0.224144, 0.12941, 0, 0.5, -0.866025, -0.258819
 light_energy = 0.0
 
 [node name="DemoCube" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.171007, 3.30168, 0.251355 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00487623, 2.09036, -0.00795748 )
 mesh = SubResource( 3 )
 material/0 = null
 script = ExtResource( 2 )
