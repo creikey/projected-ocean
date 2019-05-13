@@ -16,7 +16,7 @@ export(float) var noise_speed = 0.48 setget set_noise_speed
 
 export(int) var seed_value = 0 setget set_seed
 
-var res = 100.0
+var res = 200.0
 var initialized = false
 
 var counter = 0.5
@@ -62,7 +62,7 @@ func _ready():
 	add_vertex(-Vector3(1,1,1)*pow(2,32))
 	add_vertex(Vector3(1,1,1)*pow(2,32))
 	end()
-	
+	material_override.set_shader_param('resolution', res)
 #	waves_in_tex = ImageTexture.new()
 	update_waves()
 
