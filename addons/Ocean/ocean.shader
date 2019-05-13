@@ -85,7 +85,7 @@ vec3 wave_interpolated(vec2 pos, float time, float grid_distance) {
 		
 		float W = dot(w*dir, pos) + phase*time;
 		
-		float dim_factor = clamp( (((((2.0*PI)/w)/grid_distance) - 2.0) / (n_max - 2.0)), 0.0, 1.0);
+		float dim_factor = clamp( (((((2.0*PI)/w)/grid_distance) - 1.0) / (n_max - 1.0)), 0.0, 1.0);
 		new_p.xz += (steep*amp * dir * cos(W))*dim_factor;
 		new_p.y += (amp * sin(W))*dim_factor;
 	}
@@ -164,8 +164,8 @@ float fresnel(float n1, float n2, float cos_theta) {
 }
 
 void fragment() {
-	NORMAL = wave_normal(vert_coord, time_offset, vert_dist/40.0);
-	NORMAL = mix(NORMAL, vec3(0, -1, 0), min(vert_dist/1000.0, 1));
+	NORMAL = wave_normal(vert_coord, time_offset, vert_dist/80.0);
+	NORMAL = mix(NORMAL, vec3(0, -1, 0), min(vert_dist/1500.0, 1));
 	
 	float eye_dot_norm = dot(eyeVector, NORMAL);
 	float n1 = 1.0, n2 = 1.3333;

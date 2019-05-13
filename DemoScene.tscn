@@ -10,7 +10,10 @@ sky_curve = 0.0499306
 ground_bottom_color = Color( 0.0784314, 0.160784, 0.247059, 1 )
 ground_horizon_color = Color( 0.407843, 0.6, 0.705882, 1 )
 ground_curve = 0.0672718
-sun_latitude = 59.0
+sun_latitude = 26.3
+sun_longitude = -21.1
+sun_angle_max = 25.3
+sun_curve = 0.672718
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
@@ -36,5 +39,11 @@ material/0 = null
 script = ExtResource( 2 )
 
 [node name="Ocean" parent="." instance=ExtResource( 3 )]
-waves = [ Vector3( 10.75, 9.21, 86.27 ), Vector3( 3.77, 15.25, 59.06 ), Vector3( 19.64, 0, 34.26 ), Vector3( 24.23, 14.42, 39.47 ), Vector3( 100, 0, 63.13 ), Vector3( 31.32, 0, 56.58 ), Vector3( 300, 0, 200 ), Vector3( 90.92, 9.68, 154.99 ), Vector3( 2000, 2.84, 400 ), Vector3( 75.55, 20.88, 100 ), Vector3( 23.63, 0, 54.68 ) ]
+waves = [ Vector3( 89.29, 18.32, 100 ), Vector3( 263.44, 12.1, 120 ), Vector3( 187.26, 0, 100 ), Vector3( 32.61, 16.66, 28.81 ), Vector3( 51.84, 2.5, 37.75 ), Vector3( 400, 15.09, 200 ), Vector3( 300, 7.71, 300 ), Vector3( 191.83, 0, 80 ), Vector3( 105.52, 4.12, 150 ), Vector3( 400, 0, 250 ), Vector3( 300, 14.55, 300 ) ]
+wave_directions = PoolRealArray( 45, 0, 136.42, 120, 80.71, 0, 80, 270, 300, 108.65, 240 )
+speed = 4.13
+n_max = 30.0
+noise_amplitude = -1.274
+noise_frequency = 0.055
+noise_speed = 0.21
 cube_cam_path = NodePath("../../DemoScene/Ocean/EnvironmentCameras")
