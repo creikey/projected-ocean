@@ -36,4 +36,5 @@ material/0 = null
 script = ExtResource( 2 )
 
 [node name="Ocean" parent="." instance=ExtResource( 3 )]
+waves = [ Vector3( 10.75, 9.21, 86.27 ), Vector3( 3.77, 15.25, 59.06 ), Vector3( 19.64, 0, 34.26 ), Vector3( 24.23, 14.42, 39.47 ), Vector3( 100, 0, 63.13 ), Vector3( 31.32, 0, 56.58 ), Vector3( 300, 0, 200 ), Vector3( 90.92, 9.68, 154.99 ), Vector3( 2000, 2.84, 400 ), Vector3( 75.55, 20.88, 100 ), Vector3( 23.63, 0, 54.68 ) ]
 cube_cam_path = NodePath("../../DemoScene/Ocean/EnvironmentCameras")

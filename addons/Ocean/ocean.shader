@@ -3,7 +3,10 @@ render_mode skip_vertex_transform, cull_front, unshaded;
 
 uniform sampler2D waves;
 
+uniform float resolution = 200.0;
+uniform float n_max = 200.0;
 uniform float alpha = 0.9;
+uniform float PI = 3.14159;
 
 uniform sampler2D noise;
 uniform vec4 noise_params;
@@ -26,9 +29,11 @@ mat3 getRotation(mat4 camera) {
 		camera[0].xyz,
 		camera[1].xyz,
 		camera[2].xyz
-	);}
+	);
+}
 vec3 getPosition(mat4 camera) {
-	return -camera[3].xyz * getRotation(camera);}
+	return -camera[3].xyz * getRotation(camera);
+}
 
 vec2 getImagePlan(mat4 projection, vec2 uv) {
 	float focal = projection[0].x * project_bias;
@@ -43,7 +48,8 @@ vec3 interceptPlane(vec3 source, vec3 dir, vec4 plane) {
 		return source + dir * dist;
 	} else {
 		return -(vec3(source.x, plane.w, source.z) + vec3(dir.x, plane.w, dir.z) * 100000.0);
-	}}
+	}
+}
 
 vec3 computeProjectedPosition(in vec3 cam_pos, in mat3 cam_rot, in mat4 projection, in vec2 uv) {
 	vec2 screenUV = getImagePlan(projection, uv);
@@ -61,6 +67,31 @@ float noise3D(vec3 p) {
 	float b = texture(noise, p.xy + b_off).r;
 	
 	return mix(a, b, fz);
+}
+
+vec3 wave_interpolated(vec2 pos, float time, float grid_distance) {
+	vec3 new_p = vec3(pos.x, 0.0, pos.y);
+	
+	float w, amp, steep, phase;
+	vec2 dir;
+	for(int i = 0; i < textureSize(waves, 0).y; i++) {
+		amp = texelFetch(waves, ivec2(0, i), 0).r;
+		if(amp == 0.0) continue;
+		
+		dir = vec2(texelFetch(waves, ivec2(2, i), 0).r, texelFetch(waves, ivec2(3, i), 0).r);
+		w = texelFetch(waves, ivec2(4, i), 0).r;
+		steep = texelFetch(waves, ivec2(1, i), 0).r /(w*amp);
+		phase = 2.0 * w;
+		
+		float W = dot(w*dir, pos) + phase*time;
+		
+		float dim_factor = clamp( (((((2.0*PI)/w)/grid_distance) - 2.0) / (n_max - 2.0)), 0.0, 1.0);
+		new_p.xz += (steep*amp * dir * cos(W))*dim_factor;
+		new_p.y += (amp * sin(W))*dim_factor;
+	}
+	if(noise_params.w > 0.0)
+		new_p.y += noise3D(vec3(pos.xy*noise_params.y, time*noise_params.z))*noise_params.x;
+	return new_p;
 }
 
 vec3 wave(vec2 pos, float time) {
@@ -101,6 +132,7 @@ varying vec2 vert_coord;
 varying float vert_dist;
 
 varying vec3 eyeVector;
+//varying float grid_distance;
 
 void vertex() {
 	vec2 screen_uv = VERTEX.xz + 0.5;
@@ -113,7 +145,10 @@ void vertex() {
 	VERTEX = computeProjectedPosition(camPosition, camRotation, PROJECTION_MATRIX, screen_uv);
 	
 	vec2 pre_displace = VERTEX.xz;
-	VERTEX = wave(VERTEX.xz, time_offset);
+	vec3 next_point = computeProjectedPosition(camPosition, camRotation, PROJECTION_MATRIX, screen_uv + vec2(1.0 / resolution));
+	float grid_distance = distance(VERTEX, next_point);
+	VERTEX = wave_interpolated(VERTEX.xz, time_offset, grid_distance);
+//	VERTEX = wave(VERTEX.xz, time_offset);
 	if( any(lessThan(screen_uv, vec2(0.0))) || any(greaterThan(screen_uv, vec2(1.0))) )
 		VERTEX.xz = pre_displace;
 	
@@ -145,5 +180,6 @@ void fragment() {
 		refract_global = water_color.rgb;
 	
 	ALBEDO = mix(refract_global, reflect_global, reflectiveness);
+//	ALBEDO = vec3(grid_distance/5.0);
 	ALPHA = alpha;
 }
