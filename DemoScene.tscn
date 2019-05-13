@@ -39,7 +39,7 @@ material/0 = null
 script = ExtResource( 2 )
 
 [node name="Ocean" parent="." instance=ExtResource( 3 )]
-waves = [ Vector3( 89.29, 18.32, 100 ), Vector3( 263.44, 12.1, 120 ), Vector3( 187.26, 0, 100 ), Vector3( 32.61, 16.66, 28.81 ), Vector3( 51.84, 2.5, 37.75 ), Vector3( 400, 15.09, 200 ), Vector3( 300, 7.71, 300 ), Vector3( 191.83, 0, 80 ), Vector3( 105.52, 4.12, 150 ), Vector3( 400, 0, 250 ), Vector3( 300, 14.55, 300 ) ]
+waves = [ Vector3( 89.29, 0, 100 ), Vector3( 263.44, 0, 120 ), Vector3( 187.26, 0, 100 ), Vector3( 32.61, 0, 28.81 ), Vector3( 51.84, 2.5, 37.75 ), Vector3( 400, 0, 200 ), Vector3( 300, 0, 300 ), Vector3( 191.83, 0, 80 ), Vector3( 105.52, 0, 150 ), Vector3( 400, 0, 250 ), Vector3( 300, 14.55, 300 ) ]
 wave_directions = PoolRealArray( 45, 0, 136.42, 120, 80.71, 0, 80, 270, 300, 108.65, 240 )
 speed = 4.13
 n_max = 30.0
